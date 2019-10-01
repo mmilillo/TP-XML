@@ -5,9 +5,9 @@ import java.io.IOException;
 
 public class XSDValidadorTest extends TestCase {
 
-    String PATH_XML_VALIDO = "/home/manuel/Desktop/xml/XML/TP-XML/src/main/resources/quilmes_2012.xml";
-    String PATH_XML_INVALIDO = "/home/manuel/Desktop/xml/XML/TP-XML/src/main/resources/quilmes_2012_malo.xml";
-    String PATH_XSD = "/home/manuel/Desktop/xml/XML/TP-XML/src/main/resources/xml-schema.xsd";
+    String PATH_XML_VALIDO = "src/main/resources/quilmes_2012.xml";
+    String PATH_XML_INVALIDO = "src/main/resources/quilmes_2012_malo.xml";
+    String PATH_XSD = "src/main/resources/xml-schema.xsd";
 
     public void testArchivoValido() throws IOException, ParserConfigurationException {
 
