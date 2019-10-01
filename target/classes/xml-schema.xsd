@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="unqualified" xmlns:fcion="urn:xlmns:fcion"
+           targetNamespace="urn:xlmns:fcion">
+
+
+
+    <xs:simpleType name="posicion">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="arquero"/>
+            <xs:enumeration value="defensor"/>
+            <xs:enumeration value="mediocampista"/>
+            <xs:enumeration value="delantero"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+
+    <xs:complexType name="jugador">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="posicion" type="fcion:posicion" use="required" />
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+
+
+    <xs:complexType name="formacion" >
+        <xs:sequence maxOccurs="11">
+            <xs:element name="jugador" type="fcion:jugador" />
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <!-- por defecto es complexType complexcontent si no se aclara nada-->
+    <xs:complexType name="equipo">
+        <xs:sequence>
+            <xs:element name="formacion" type="fcion:formacion" maxOccurs="1" minOccurs="1"/>
+            <xs:element name="capitan" type="xs:string" maxOccurs="1" minOccurs="1"/>
+            <xs:element name="dt" type="xs:string" maxOccurs="1" minOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="club" type="xs:string" use="required" />
+    </xs:complexType>
+
+    <xs:complexType name="equipos">
+        <xs:sequence>
+            <xs:element name="local" type="fcion:equipo" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="visitante" type="fcion:equipo" maxOccurs="1" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="gol">
+        <xs:sequence>
+            <xs:element name="minuto" type="xs:integer" maxOccurs="1" minOccurs="1"/>
+            <xs:element name="autor" type="xs:string" maxOccurs="1" minOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="golesEquipo">
+        <xs:sequence maxOccurs="unbounded">
+            <xs:element name="gol" type="fcion:gol"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="goles">
+        <xs:sequence>
+            <xs:element name="visitante" type="fcion:golesEquipo" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="local" type="fcion:golesEquipo" maxOccurs="1" minOccurs="0"/>
+
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:element name="partido">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="equipos" type="fcion:equipos" maxOccurs="1" minOccurs="1"/>
+                <xs:element name="figura" type="xs:string" maxOccurs="1" minOccurs="1"/>
+                <xs:element name="goles" type="fcion:goles" maxOccurs="1" minOccurs="1"/>
+            </xs:sequence>
+            <xs:attribute name="fecha" type="xs:string" use="required" />
+        </xs:complexType>
+    </xs:element>
+
+
+</xs:schema>
