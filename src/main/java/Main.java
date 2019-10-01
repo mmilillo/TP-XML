@@ -17,6 +17,7 @@ public class Main {
         entradaEscaner = new Scanner (System.in);
         PATH_XSD = entradaEscaner.nextLine ();
 
+
         System.out.println ("Resultado:");
 
         XSDValidador  validador = new XSDValidador(PATH_XML,PATH_XSD);
