@@ -1,20 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="836317bf-7217-4537-9523-9e3df707b698" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/XSDValidador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/xml/ValidadorXSD.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/XSDValidadorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/xml/ValidadorXSDTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/TP-XML.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/XSDValidador$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/XSDValidador.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/quilmes_2012.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/quilmes_2012_malo.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/xml-schema.xsd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/META-INF/TP-XML.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/XSDValidadorTest.class" beforeDir="false" />
-    </list>
+    <list default="true" id="836317bf-7217-4537-9523-9e3df707b698" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
