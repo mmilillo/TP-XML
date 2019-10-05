@@ -1,3 +1,5 @@
+package xml;
+
 import org.xml.sax.*;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -11,14 +13,14 @@ import java.io.IOException;
 // SAX
 //SAX and external XSD
 
-public class XSDValidador {
+public class ValidadorXSD {
 
     private String PATH_XML = "";
     private String PATH_XSD = "";
 
-    private XSDValidador(){};
+    private ValidadorXSD(){};
 
-    public XSDValidador(String xml, String xsd) {
+    public ValidadorXSD(String xml, String xsd) {
         PATH_XML = xml;
         PATH_XSD = xsd;
     }
