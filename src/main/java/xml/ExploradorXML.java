@@ -9,6 +9,9 @@ public class ExploradorXML {
 
     }
 
+    public boolean algo(){
+        return true;
+    }
     /***
      * Muesta formacion local y visitante.
      * Marca con un * junto a cada jugador por cada gol anotado
