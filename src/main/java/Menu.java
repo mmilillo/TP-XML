@@ -11,8 +11,12 @@ public class Menu {
     private Scanner entradaEscaner = null;
     private int opcion = -1;
 
-    public Menu(String PathXml) throws IOException, SAXException, ParserConfigurationException {
+    public Menu(String pathXml) throws IOException, SAXException, ParserConfigurationException {
         entradaEscaner = new Scanner (System.in);
+        //rompe con el path del xml. solo funciona si le das el nombre. no se como
+        // funcionaria si ejecutas esto por consola fuera del ide. no va a servir quedarse solo con el nombre
+        //del archivo ingresado
+        System.out.println(pathXml);
         exploradorXML = new ExploradorXML("quilmes_2012.xml");
     }
 

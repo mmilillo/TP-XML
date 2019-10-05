@@ -48,6 +48,7 @@ public class ExploradorXML {
     public void mostrarFormaciones()
     {
 
+        printFomrmacion("local");
         printFomrmacion("visitante");
     }
 
@@ -56,15 +57,8 @@ public class ExploradorXML {
         System.out.println("Equipo " + equipo.toString());
         System.out.println("");
 
-        /*
-        final Node visitante = doc.getElementsByTagName("visitante").item(0);
-        NodeList nodosHijosEquipo = visitante.getChildNodes();
-        Node formacion = getUniqueNodeByName(nodosHijosEquipo, "formacion");
-        Collection<Node> quilmesPlayersNodes = getNodesByName(formacion.getChildNodes(), "jugador");
-        quilmesPlayersNodes.stream().forEach( n -> System.out.println(n.getFirstChild().getNodeValue()));
-*/
 
-        Node unEquipo = doc.getElementsByTagName("visitante").item(0); //devuelve una NodeList de 1
+        Node unEquipo = doc.getElementsByTagName(equipo.toString()).item(0); //devuelve una NodeList de 1
         NodeList nodosHijosEquipo = unEquipo.getChildNodes();
 
         Node formacion = getUniqueNodeByName(nodosHijosEquipo,"formacion");
