@@ -6,9 +6,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
@@ -35,10 +33,6 @@ public class ExploradorXML {
         this.doc = builder.parse(new InputSource(inputStream));
     }
 
-    public boolean algo(){
-        return true;
-    }
-
 
     /***
      * Muesta formacion local y visitante.
@@ -56,7 +50,6 @@ public class ExploradorXML {
     {
         System.out.println("Equipo " + equipo.toString());
         System.out.println("");
-
 
         Node unEquipo = doc.getElementsByTagName(equipo.toString()).item(0); //devuelve una NodeList de 1
         NodeList nodosHijosEquipo = unEquipo.getChildNodes();
@@ -100,7 +93,21 @@ public class ExploradorXML {
      * Muestra las figuras del partido
      * No recorre el dom del XML
      */
-    //public void mostrarFiguraPartido(){};
+    public void mostrarFiguraPartido() throws ParserConfigurationException, SAXException {
+
+        SAXParserFactory factory = SAXParserFactory.newInstance();  //Creem una instancia d'una factoria de parser SAX
+        ClassLoader classLoader = ExploradorXML.class.getClassLoader();
+        InputStream inputStream = classLoader.getResourceAsStream("quilmes_2012.xml");
+
+        SAXParser saxParser = factory.newSAXParser();
+        ControladorSAX sh = new ControladorSAX();
+
+        try{
+            saxParser.parse(inputStream,sh);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    };
 
     /**
      * Muesta el nombre de los jugadores que anotaron.

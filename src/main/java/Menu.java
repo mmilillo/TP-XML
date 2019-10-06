@@ -18,9 +18,13 @@ public class Menu {
         //del archivo ingresado
         System.out.println(pathXml);
         exploradorXML = new ExploradorXML("quilmes_2012.xml");
+
+
+        //para sax
+
     }
 
-    public void mostrarMenu(){
+    public void mostrarMenu() throws ParserConfigurationException, SAXException {
         System.out.println("");
         System.out.println("MENU");
         System.out.println("1 Mostrar Formaciones");
@@ -40,15 +44,14 @@ public class Menu {
         }
     }
 
-    private void ejecutarAccion(int opcion)
-    {
+    private void ejecutarAccion(int opcion) throws ParserConfigurationException, SAXException {
         switch(opcion) {
             case 1:
                 this.mostrarFormaciones();
                 mostrarMenu();
                 break;
             case 2:
-                System.out.println("mostrarFiguraPartido");
+                this.mostrarFiguraPartido();
                 mostrarMenu();
                 break;
             case 3:
@@ -74,4 +77,7 @@ public class Menu {
         exploradorXML.mostrarFormaciones();
     }
 
+    private void mostrarFiguraPartido() throws ParserConfigurationException, SAXException {
+        exploradorXML.mostrarFiguraPartido();
+    }
 }
