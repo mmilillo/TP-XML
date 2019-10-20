@@ -13,7 +13,9 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FormacionService {
 
@@ -77,10 +79,24 @@ public class FormacionService {
             }
         }
 
+        /////
+        Map<String, String> autorGoles = new HashMap<String, String>();
+
+        for(Gol gol : goles){
+            String autor = gol.getAutor();
+            if(!autorGoles.containsKey(autor)){
+                autorGoles.put(gol.getAutor(), "*");
+            }
+            else{
+                autorGoles.replace(autor,autorGoles.get(autor) + "*");
+            }
+        }
+        /////
+
         for(Gol gol : goles){
             for(Jugador jugador : jugadores){
                 if(jugador.getNombre().equals(gol.getAutor())){
-                    jugador.setNombre(jugador.getNombre() + " " + gol.getMinuto());
+                    jugador.setNombre(jugador.getNombre() + " " + autorGoles.get(gol.getAutor()));
                 }
             }
         }
@@ -100,6 +116,11 @@ public class FormacionService {
         //exploradorXML.mostrarFiguraPartido();
     }
 
+    /**
+     * Muesta el nombre de los jugadores que anotaron.
+     * Ordenando por equipo y de fomorma cronologica.
+     * Agrupa los goles por jugador mostrando nombre seguido de la marca temporal en la que anoto
+     */
     public void mostrarResultado()
     {
         exploradorXML.mostrarResultado();

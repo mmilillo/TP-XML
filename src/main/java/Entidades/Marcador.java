@@ -16,6 +16,10 @@ public class Marcador {
     public Marcador(List<Gol> golesLocales, List<Gol> golesVisitantes){
         this();
 
+        this.golesLocales = golesLocales;
+        this.golesVisitantes = golesVisitantes;
+
+        /*
         for(Gol gol : golesLocales){
             if(!this.golesLocales.stream().anyMatch((g) -> g.getAutor().equals(gol.getAutor()))){
                 this.golesLocales.add(gol);
@@ -34,9 +38,11 @@ public class Marcador {
             else{
                 Gol golGrabado = this.golesVisitantes.stream().filter((g) -> g.getAutor().equals(gol.getAutor()))
                         .findFirst().get();
-                golGrabado.setMinuto(golGrabado.getMinuto() + " " + gol.getMinuto());
+                golGrabado.setMinuto(golGrabado.getMinuto() + "," + gol.getMinuto());
             }
         }
+
+         */
 
     }
 
