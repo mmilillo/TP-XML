@@ -72,16 +72,16 @@ public class FormacionService {
 
     private void formatearFormacion(Formacion formacion, List<Gol> goles, String capitan){
         List<Jugador> jugadores = formacion.getFormacion();
+        Map<String, String> autorGoles = new HashMap<String, String>();
 
+        //agrega marca capitan
         for(Jugador jugador : jugadores){
             if(jugador.getNombre().equals(capitan)){
                 jugador.setNombre(jugador.getNombre() + " [C]");
             }
         }
 
-        /////
-        Map<String, String> autorGoles = new HashMap<String, String>();
-
+        //completa diccionario con autor - goles
         for(Gol gol : goles){
             String autor = gol.getAutor();
             if(!autorGoles.containsKey(autor)){
@@ -91,8 +91,8 @@ public class FormacionService {
                 autorGoles.replace(autor,autorGoles.get(autor) + "*");
             }
         }
-        /////
 
+        //agrega marca de goles al jugador
         for(Gol gol : goles){
             for(Jugador jugador : jugadores){
                 if(jugador.getNombre().equals(gol.getAutor())){
@@ -123,6 +123,45 @@ public class FormacionService {
      */
     public void mostrarResultado()
     {
-        exploradorXML.mostrarResultado();
+        Marcador marcador = exploradorXML.GetMarcador();
+
+        List<Gol> golesLocales = marcador.getGolesLocales();
+        List<Gol> golesVisitantes = marcador.getGolesVisitantes();
+
+        Map<String,String> autorGolesLocales = new HashMap<String, String>();
+        Map<String,String> autorGolesVisitantes = new HashMap<String, String>();
+
+        for(Gol gol : golesLocales){
+            if(!autorGolesLocales.containsKey(gol.getAutor())){
+                autorGolesLocales.put(gol.getAutor(),gol.getMinuto());
+            }
+            else{
+                String autor = gol.getAutor();
+                autorGolesLocales.replace(autor,autorGolesLocales.get(autor) + "," + gol.getMinuto());
+            }
+        }
+
+        for(Gol gol : golesVisitantes){
+            if(!autorGolesVisitantes.containsKey(gol.getAutor())){
+                autorGolesVisitantes.put(gol.getAutor(),gol.getMinuto());
+            }
+            else{
+                String autor = gol.getAutor();
+                autorGolesVisitantes.replace(autor,autorGolesVisitantes.get(autor) + "," + gol.getMinuto());
+            }
+        }
+
+
+        System.out.println(marcador.getEquipoLocal() + " " + marcador.getGolesLocales().size());
+        autorGolesLocales.forEach((k,v) -> System.out.println(k + " " + v));
+        System.out.println(" ");
+        System.out.println(marcador.getEquipoVisitante() + " " + marcador.getGolesVisitantes().size());
+        autorGolesVisitantes.forEach((k,v) -> System.out.println(k + " " + v));
+
+
+
+
+
+        //exploradorXML.mostrarResultado();
     }
 }

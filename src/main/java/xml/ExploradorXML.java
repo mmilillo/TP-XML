@@ -65,6 +65,13 @@ public class ExploradorXML {
 
     public Marcador GetMarcador(){
 
+        //recupero eqipos
+        Node equipoLocal =  doc.getElementsByTagName("local").item(0); //devuelve una NodeList de 1
+        Node equipoVisitante =  doc.getElementsByTagName("visitante").item(0); //devuelve una NodeList de 1
+
+        String nombreLocal = equipoLocal.getAttributes().item(0).getNodeValue();
+        String nombreVisitante = equipoVisitante.getAttributes().item(0).getNodeValue();
+
         //recupero goles
         Node goles = doc.getElementsByTagName("goles").item(0); //devuelve una NodeList de 1
 
@@ -74,7 +81,7 @@ public class ExploradorXML {
         ArrayList<Gol> golesLocales = getGolesByGolesNode(golesLocalNode);
         ArrayList<Gol> golesVisitantes = getGolesByGolesNode(golesVisitanteNode);
 
-        return new Marcador(golesLocales, golesVisitantes);
+        return new Marcador(nombreLocal,nombreVisitante, golesLocales, golesVisitantes);
 
     }
 
@@ -113,6 +120,11 @@ public class ExploradorXML {
 
         return nombreCapitan;
     }
+
+
+
+    //de aca pa abajo cosa vieja cosa mala cosa fea
+
 
     /***
      * Muesta formacion local y visitante.

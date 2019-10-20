@@ -1,10 +1,13 @@
 package Entidades;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Marcador {
 
+    private String equipoLocal;
+    private String equipoVisitante;
     private List<Gol> golesLocales;
     private List<Gol> golesVisitantes;
 
@@ -13,37 +16,13 @@ public class Marcador {
         golesVisitantes = new ArrayList<Gol>();
     }
 
-    public Marcador(List<Gol> golesLocales, List<Gol> golesVisitantes){
+    public Marcador(String equipoLocal,String equipoVisitante, List<Gol> golesLocales, List<Gol> golesVisitantes){
         this();
 
+        this.equipoLocal = equipoLocal;
+        this.equipoVisitante = equipoVisitante;
         this.golesLocales = golesLocales;
         this.golesVisitantes = golesVisitantes;
-
-        /*
-        for(Gol gol : golesLocales){
-            if(!this.golesLocales.stream().anyMatch((g) -> g.getAutor().equals(gol.getAutor()))){
-                this.golesLocales.add(gol);
-            }
-            else{
-                Gol golGrabado = this.golesLocales.stream().filter((g) -> g.getAutor().equals(gol.getAutor()))
-                        .findFirst().get();
-                golGrabado.setMinuto(golGrabado.getMinuto() + " " + gol.getMinuto());
-            }
-        }
-
-        for(Gol gol : golesVisitantes){
-            if(!this.golesVisitantes.stream().anyMatch((g) -> g.getAutor().equals(gol.getAutor()))){
-                this.golesVisitantes.add(gol);
-            }
-            else{
-                Gol golGrabado = this.golesVisitantes.stream().filter((g) -> g.getAutor().equals(gol.getAutor()))
-                        .findFirst().get();
-                golGrabado.setMinuto(golGrabado.getMinuto() + "," + gol.getMinuto());
-            }
-        }
-
-         */
-
     }
 
     void agregarGolLocal(Gol gol){
@@ -54,12 +33,30 @@ public class Marcador {
         golesVisitantes.add(gol);
     }
 
+
     public List<Gol> getGolesVisitantes(){
+        Collections.sort(golesVisitantes);
         return this.golesVisitantes;
     }
 
     public List<Gol> getGolesLocales(){
+        Collections.sort(golesLocales);
         return this.golesLocales;
     }
 
+    public String getEquipoLocal() {
+        return equipoLocal;
+    }
+
+    public void setEquipoLocal(String equipoLocal) {
+        this.equipoLocal = equipoLocal;
+    }
+
+    public String getEquipoVisitante() {
+        return equipoVisitante;
+    }
+
+    public void setEquipoVisitante(String equipoVisitante) {
+        this.equipoVisitante = equipoVisitante;
+    }
 }
