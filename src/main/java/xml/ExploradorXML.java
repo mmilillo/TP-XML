@@ -1,5 +1,9 @@
 package xml;
 
+import Entidades.Formacion;
+import Entidades.Gol;
+import Entidades.Jugador;
+import Entidades.Marcador;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -10,6 +14,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.*;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +42,77 @@ public class ExploradorXML {
         this.root = doc.getDocumentElement();
     }
 
+    public Formacion getFormacion(String localidad){
+        Formacion formacion = new Formacion();
+
+        //recupero formacion
+        Node unEquipo =  doc.getElementsByTagName(localidad).item(0); //devuelve una NodeList de 1
+        Node formacionNode = getFormacion(unEquipo);//getUniqueNodeByName(nodosHijosEquipo,"formacion");
+        Collection<Node> jugadores = getNodesByName(formacionNode.getChildNodes(), "jugador");
+
+        for(Node jugador : jugadores){
+            formacion.agregar(getJugadorByNode(jugador));
+        }
+
+        return formacion;
+    }
+
+    private Jugador getJugadorByNode(Node jugadorNode){
+        String nombreJugador = jugadorNode.getFirstChild().getNodeValue();
+        Jugador jugador = new Jugador(nombreJugador);
+        return jugador;
+    }
+
+    public Marcador GetMarcador(){
+
+        //recupero goles
+        Node goles = doc.getElementsByTagName("goles").item(0); //devuelve una NodeList de 1
+
+        Node golesLocalNode = getGolesPorLocalidad(goles,"local");
+        Node golesVisitanteNode = getGolesPorLocalidad(goles,"visitante");
+
+        ArrayList<Gol> golesLocales = getGolesByGolesNode(golesLocalNode);
+        ArrayList<Gol> golesVisitantes = getGolesByGolesNode(golesVisitanteNode);
+
+        return new Marcador(golesLocales, golesVisitantes);
+
+    }
+
+    private ArrayList<Gol> getGolesByGolesNode(Node golesNode){
+        ArrayList<Gol> goles = new ArrayList<Gol>();
+
+        if(golesNode == null){
+            return goles;
+        }
+
+        Collection<Node> listGolesNode = getNodesByName(golesNode.getChildNodes(), "gol");
+
+        for(Node gol : listGolesNode){
+            goles.add(getGolByNode(gol));
+        }
+
+        return goles;
+    }
+
+    private Gol getGolByNode(Node golNode){
+        NodeList datosDelGol = golNode.getChildNodes();
+        Node minutoNode = getUniqueNodeByName(datosDelGol, "minuto");
+        Node autorNode = getUniqueNodeByName(datosDelGol, "autor");
+
+        String minuto = minutoNode.getFirstChild().getNodeValue();
+        String autor = autorNode.getFirstChild().getNodeValue();
+
+        return new Gol(minuto,autor);
+    }
+
+    public String getCapitanByLocalidad(String localidad){
+        //recupero capitan
+        Node unEquipo =  doc.getElementsByTagName(localidad).item(0); //devuelve una NodeList de 1
+        Node capitanNode = getCapitan(unEquipo); //getUniqueNodeByName(nodosHijosEquipo, "capitan");
+        String nombreCapitan = capitanNode.getFirstChild().getNodeValue();
+
+        return nombreCapitan;
+    }
 
     /***
      * Muesta formacion local y visitante.
@@ -143,6 +219,10 @@ public class ExploradorXML {
         Collection<Node> nodesFound = getNodesByName(nodeList, name);
         if (!nodesFound.isEmpty() && nodesFound.size() > 1) {
             throw new IllegalStateException("Se encontró más de 1 nodo con ese nombre");
+        }
+
+        if(nodesFound.isEmpty()){
+            return null;
         }
         return nodesFound.iterator().next();
     }

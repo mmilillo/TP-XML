@@ -1,5 +1,5 @@
+import Servicios.FormacionService;
 import org.xml.sax.SAXException;
-import xml.ExploradorXML;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
@@ -7,21 +7,13 @@ import java.util.Scanner;
 
 public class Menu {
 
-    private ExploradorXML exploradorXML;
     private Scanner entradaEscaner = null;
     private int opcion = -1;
+    private FormacionService service;
 
     public Menu(String pathXml) throws IOException, SAXException, ParserConfigurationException {
         entradaEscaner = new Scanner (System.in);
-        //rompe con el path del xml. solo funciona si le das el nombre. no se como
-        // funcionaria si ejecutas esto por consola fuera del ide. no va a servir quedarse solo con el nombre
-        //del archivo ingresado
-        System.out.println(pathXml);
-        exploradorXML = new ExploradorXML("quilmes_2012.xml");
-
-
-        //para sax
-
+        service = new FormacionService(pathXml);
     }
 
     public void mostrarMenu() throws ParserConfigurationException, SAXException {
@@ -74,15 +66,15 @@ public class Menu {
     }
 
     private void mostrarFormaciones(){
-        exploradorXML.mostrarFormaciones();
+        service.mostrarFormaciones();
     }
 
     private void mostrarFiguraPartido() throws ParserConfigurationException, SAXException {
-        exploradorXML.mostrarFiguraPartido();
+        service.mostrarFiguraPartido();
     }
 
     private void mostrarResultado()
     {
-        exploradorXML.mostrarResultado();
+        service.mostrarResultado();
     }
 }
