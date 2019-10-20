@@ -5,16 +5,25 @@ import Entidades.Gol;
 import Entidades.Jugador;
 import Entidades.Marcador;
 import org.xml.sax.SAXException;
+import xml.ControladorSAX;
 import xml.ExploradorXML;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 public class FormacionService {
 
     private String path;
     private ExploradorXML exploradorXML;
+    private ControladorSAX sh;
+    private SAXParser saxParser;
+    private InputStream inputStream;
+
+
 
     public FormacionService(String path) throws IOException, SAXException, ParserConfigurationException {
         this.path = path;
@@ -23,8 +32,23 @@ public class FormacionService {
         //del archivo ingresado
         System.out.println(this.path);
         exploradorXML = new ExploradorXML("quilmes_2012.xml"); //aca iria el path posta
+
+        //para recorrer sin el dom
+        sh = new ControladorSAX();
+
+        SAXParserFactory factory = SAXParserFactory.newInstance();  //Creem una instancia d'una factoria de parser SAX
+        saxParser = factory.newSAXParser();
+
+        ClassLoader classLoader = FormacionService.class.getClassLoader();
+        inputStream = classLoader.getResourceAsStream("quilmes_2012.xml");//aca iria el path posta
+
     }
 
+    /***
+     * Muesta formacion local y visitante.
+     * Marca con un * junto a cada jugador por cada gol anotado
+     * Marca con [C] el jugador capitan de cada equipo
+     */
     public void mostrarFormaciones(){
         Formacion formacionLocal = exploradorXML.getFormacion("local");
         Formacion formacionVisitante = exploradorXML.getFormacion("visitante");
@@ -62,9 +86,18 @@ public class FormacionService {
         }
     }
 
-
+    /***
+     * Muestra las figuras del partido
+     * No recorre el dom del XML
+     */
     public void mostrarFiguraPartido() throws ParserConfigurationException, SAXException {
-        exploradorXML.mostrarFiguraPartido();
+        try{
+            saxParser.parse(inputStream,sh);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //exploradorXML.mostrarFiguraPartido();
     }
 
     public void mostrarResultado()
