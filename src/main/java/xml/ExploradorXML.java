@@ -1,6 +1,7 @@
 package xml;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
@@ -10,6 +11,7 @@ import javax.xml.parsers.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -22,6 +24,7 @@ public class ExploradorXML {
     private InputStream inputStream;
     private DocumentBuilder builder;
     private Document doc;
+    private Element root;
 
 
     public ExploradorXML(String pathXml) throws ParserConfigurationException, IOException, SAXException {
@@ -31,6 +34,7 @@ public class ExploradorXML {
         // Creamos el parser y parseamos el input stream
         this.builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         this.doc = builder.parse(new InputSource(inputStream));
+        this.root = doc.getDocumentElement();
     }
 
 
@@ -42,32 +46,93 @@ public class ExploradorXML {
     public void mostrarFormaciones()
     {
 
-        printFomrmacion("local");
+        //printFomrmacion("local");
         printFomrmacion("visitante");
     }
 
-    private void printFomrmacion(String equipo)
+    private void printFomrmacion(String localidad)
     {
-        System.out.println("Equipo " + equipo.toString());
-        System.out.println("");
+        System.out.println("Equipo " + localidad.toString());
+        System.out.println("puta");
 
-        Node unEquipo = doc.getElementsByTagName(equipo.toString()).item(0); //devuelve una NodeList de 1
-        NodeList nodosHijosEquipo = unEquipo.getChildNodes();
+        //recupero formacion
+        Node unEquipo =  doc.getElementsByTagName(localidad).item(0); //devuelve una NodeList de 1
+        Node formacion = getFormacion(unEquipo);//getUniqueNodeByName(nodosHijosEquipo,"formacion");
 
-        Node formacion = getUniqueNodeByName(nodosHijosEquipo,"formacion");
-        Node capitan = getUniqueNodeByName(nodosHijosEquipo, "capitan");
+        //recupero capitan
+        Node capitan = getCapitan(unEquipo); //getUniqueNodeByName(nodosHijosEquipo, "capitan");
 
-        imprimirFormacionConCapitan(formacion, capitan);
+        //recupero goles
+        Node goles = doc.getElementsByTagName("goles").item(0); //devuelve una NodeList de 1
+        Node golesVisitante = getGolesPorLocalidad(goles,"visitante");
+        printGoles(golesVisitante);
+
+        imprimirFormacion(formacion, capitan, golesVisitante);
     }
 
-    private void imprimirFormacionConCapitan( Node formacion, Node capitan)
+
+    private Node getGolesPorLocalidad(Node marcador, String localidad)
+    {
+        NodeList marcadorPorEquipos = marcador.getChildNodes();
+        Node unMarcador = getUniqueNodeByName(marcadorPorEquipos,localidad);
+        return unMarcador;
+    }
+
+    private Node getFormacion(Node equipo)
+    {
+        NodeList nodosHijosEquipo = equipo.getChildNodes();
+        Node formacion = getUniqueNodeByName(nodosHijosEquipo,"formacion");
+        return formacion;
+    }
+
+    private Node getCapitan(Node equipo)
+    {
+        NodeList nodosHijosEquipo = equipo.getChildNodes();
+        Node capitan = getUniqueNodeByName(nodosHijosEquipo, "capitan");
+        return capitan;
+    }
+
+    private void printGoles(Node goles )
+    {
+        System.out.println("se van a imprimir los goles");
+        Collection<Node> golesList = getNodesByName(goles.getChildNodes(), "gol");
+        for(Node gol : golesList){
+            NodeList datosDelGol = gol.getChildNodes();
+            Node minuto = getUniqueNodeByName(datosDelGol, "minuto");
+            Node autor = getUniqueNodeByName(datosDelGol, "autor");
+
+            System.out.println(minuto.getFirstChild().getNodeValue());
+            System.out.println(autor.getFirstChild().getNodeValue());
+        }
+    }
+
+
+    private void imprimirFormacion( Node formacion, Node capitan, Node marcador)
     {
         String nombreCapitan = capitan.getFirstChild().getNodeValue();
         Collection<Node> jugadores = getNodesByName(formacion.getChildNodes(), "jugador");
+        Collection<Node> goles = getNodesByName(marcador.getChildNodes(), "gol");
 
+        //completo el dato de capitan
         for(Node jugador : jugadores){
             if(jugador.getFirstChild().getNodeValue().equals(nombreCapitan))
                 jugador.getFirstChild().setNodeValue(jugador.getFirstChild().getNodeValue() + " [C]");
+        }
+
+        //completo el dato de goles
+        for(Node gol : goles){
+            NodeList datosDelGol = gol.getChildNodes();
+            Node autor = getUniqueNodeByName(datosDelGol, "autor");
+            Node minuto = getUniqueNodeByName(datosDelGol, "minuto");
+
+            String stringAutor = autor.getFirstChild().getNodeValue();
+            String stringMinuto = minuto.getFirstChild().getNodeValue();
+
+
+            for(Node jugador : jugadores){
+                if(jugador.getFirstChild().getNodeValue().equals(stringAutor))
+                    jugador.getFirstChild().setNodeValue(jugador.getFirstChild().getNodeValue() + " " + stringMinuto);
+            }
         }
 
         jugadores.stream().forEach( n -> System.out.println(n.getFirstChild().getNodeValue()));
@@ -114,10 +179,53 @@ public class ExploradorXML {
      * Ordenando por equipo y de fomorma cronologica.
      * Agrupa los goles por jugador mostrando nombre seguido de la marca temporal en la que anoto
      */
-    //public void mostrarResultado(){}
+    public void mostrarResultado()
+    {
+
+        String equipo = "local";
+
+        ///formacion
+        System.out.println("Equipo " + equipo.toString());
+        System.out.println("");
+
+        Node unEquipo = doc.getElementsByTagName("local").item(0); //devuelve una NodeList de 1
+        NodeList nodosHijosEquipo = unEquipo.getChildNodes();
+
+        Node formacion = getUniqueNodeByName(nodosHijosEquipo,"formacion");
+        Node capitan = getUniqueNodeByName(nodosHijosEquipo, "capitan");
+
+        String nombreCapitan = capitan.getFirstChild().getNodeValue();
+        Collection<Node> jugadores = getNodesByName(formacion.getChildNodes(), "jugador");
+
+        for(Node jugador : jugadores){
+            if(jugador.getFirstChild().getNodeValue().equals(nombreCapitan))
+                jugador.getFirstChild().setNodeValue(jugador.getFirstChild().getNodeValue() + " [C]");
+        }
+
+        jugadores.stream().forEach( n -> System.out.println(n.getFirstChild().getNodeValue()));
+        ///formacion  end
+
+        // Definir un HashMap
+        HashMap golesLocales = new HashMap();
+        HashMap golesvisitantes = new HashMap();
+
+
+        Node resultado = doc.getElementsByTagName("goles").item(0); //devuelve una NodeList de 1
+        NodeList golesPorEquiopo = unEquipo.getChildNodes();
+
+        //Node golesVisitante = getUniqueNodeByName(golesPorEquiopo,"gol");
+    }
 
     /**
      * Exporta el xml del partido agregando una seccion notas como hija de <partido>
      */
     //public void exportarXML(){};
+
+/* por las dudas
+    private Node getGolesLocales(Node documento, String localidad) {
+        NodeList equipos = documento.getChildNodes();
+        Node equipo = getUniqueNodeByName(equipos, localidad);
+        return equipo;
+    }
+*/
 }

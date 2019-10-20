@@ -55,7 +55,7 @@ public class Menu {
                 mostrarMenu();
                 break;
             case 3:
-                System.out.println("mostrarResultado");
+                this.mostrarResultado();
                 mostrarMenu();
                 break;
             case 4:
@@ -79,5 +79,10 @@ public class Menu {
 
     private void mostrarFiguraPartido() throws ParserConfigurationException, SAXException {
         exploradorXML.mostrarFiguraPartido();
+    }
+
+    private void mostrarResultado()
+    {
+        exploradorXML.mostrarResultado();
     }
 }
