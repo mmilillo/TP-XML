@@ -43,6 +43,10 @@ public class ExploradorXML {
         this.root = doc.getDocumentElement();
     }
 
+    public Document getDocumentNode(){
+        return this.doc;
+    }
+
     public Formacion getFormacion(String localidad){
         Formacion formacion = new Formacion();
 
@@ -64,7 +68,7 @@ public class ExploradorXML {
         return jugador;
     }
 
-    public Marcador GetMarcador(){
+    public Marcador getMarcador(){
 
         //recupero eqipos
         Node equipoLocal =  doc.getElementsByTagName("local").item(0); //devuelve una NodeList de 1

@@ -27,14 +27,8 @@ public class FormacionService {
     private InputStream inputStream;
 
 
-
     public FormacionService(String path) throws IOException, SAXException, ParserConfigurationException {
-        this.path = path;
-        //rompe con el path del xml. solo funciona si le das el nombre. no se como
-        // funcionaria si ejecutas esto por consola fuera del ide. no va a servir quedarse solo con el nombre
-        //del archivo ingresado
-        System.out.println(this.path);
-        exploradorXML = new ExploradorXML("quilmes_2012.xml"); //aca iria el path posta
+        exploradorXML = new ExploradorXML("procesar.xml"); //aca iria el path posta
 
         //para recorrer sin el dom
         sh = new ControladorSAX();
@@ -43,7 +37,7 @@ public class FormacionService {
         saxParser = factory.newSAXParser();
 
         ClassLoader classLoader = FormacionService.class.getClassLoader();
-        inputStream = classLoader.getResourceAsStream("quilmes_2012.xml");//aca iria el path posta
+        inputStream = classLoader.getResourceAsStream("procesar.xml");//aca iria el path posta
 
     }
 
@@ -55,7 +49,7 @@ public class FormacionService {
     public void mostrarFormaciones(){
         Formacion formacionLocal = exploradorXML.getFormacion("local");
         Formacion formacionVisitante = exploradorXML.getFormacion("visitante");
-        Marcador marcador = exploradorXML.GetMarcador();
+        Marcador marcador = exploradorXML.getMarcador();
         String capitanLocal = exploradorXML.getCapitanByLocalidad("local");
         String capitanVisitante = exploradorXML.getCapitanByLocalidad("visitante");
 
@@ -68,7 +62,6 @@ public class FormacionService {
         System.out.println(" -- Formacion visitante -- ");
         formacionVisitante.imprimir();
 
-        //exploradorXML.mostrarFormaciones();
     }
 
     private void formatearFormacion(Formacion formacion, List<Gol> goles, String capitan){
@@ -113,8 +106,6 @@ public class FormacionService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        //exploradorXML.mostrarFiguraPartido();
     }
 
     /**
@@ -124,7 +115,7 @@ public class FormacionService {
      */
     public void mostrarResultado()
     {
-        Marcador marcador = exploradorXML.GetMarcador();
+        Marcador marcador = exploradorXML.getMarcador();
 
         List<Gol> golesLocales = marcador.getGolesLocales();
         List<Gol> golesVisitantes = marcador.getGolesVisitantes();
