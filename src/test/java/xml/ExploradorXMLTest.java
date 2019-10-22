@@ -11,7 +11,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
 
-class ExploradorXMLTest extends TestCase {
+public class ExploradorXMLTest extends TestCase {
 
     String pathXMLValido = "quilmes_2012.xml";
     ExploradorXML exploradorXML;
