@@ -154,7 +154,8 @@ public class FormacionService {
     /**
      * Exporta el xml del partido agregando una seccion notas como hija de <partido>
      */
-    public void exportarXML() throws TransformerException, ParserConfigurationException {
-        exploradorXML.exportarXML("muy lendo partido che.");
+    public void exportarXML(String notas) throws TransformerException, ParserConfigurationException {
+        System.out.println(notas);
+        exploradorXML.exportarXML(notas);
     };
 }

@@ -80,6 +80,7 @@ public class Menu {
     }
 
     private void exportarXML() throws TransformerException, ParserConfigurationException {
-        service.exportarXML();
+        System.out.println("Ingrese notas para adjuntar al XML: ");
+        service.exportarXML(entradaEscaner.nextLine());
     }
 }
