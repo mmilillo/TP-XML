@@ -4,7 +4,6 @@ import Entidades.Formacion;
 import Entidades.Marcador;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.Test;
-import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -61,7 +60,7 @@ public class ExploradorXMLTest extends TestCase {
 
 
     @Test
-    void testExportarXML() throws IOException, SAXException, ParserConfigurationException, TransformerException {
+    public void testExportarXML() throws IOException, SAXException, ParserConfigurationException, TransformerException {
         exploradorXML.exportarXML("prueba");
     }
 
