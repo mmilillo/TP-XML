@@ -11,6 +11,7 @@ import xml.ExploradorXML;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -157,11 +158,12 @@ public class FormacionService {
         System.out.println(" ");
         System.out.println(marcador.getEquipoVisitante() + " " + marcador.getGolesVisitantes().size());
         autorGolesVisitantes.forEach((k,v) -> System.out.println(k + " " + v));
-
-
-
-
-
-        //exploradorXML.mostrarResultado();
     }
+
+    /**
+     * Exporta el xml del partido agregando una seccion notas como hija de <partido>
+     */
+    public void exportarXML() throws TransformerException, ParserConfigurationException {
+        exploradorXML.exportarXML("muy lendo partido che.");
+    };
 }

@@ -2,6 +2,7 @@ import Servicios.FormacionService;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -16,7 +17,7 @@ public class Menu {
         service = new FormacionService(pathXml);
     }
 
-    public void mostrarMenu() throws ParserConfigurationException, SAXException {
+    public void mostrarMenu() throws ParserConfigurationException, SAXException, TransformerException {
         System.out.println("");
         System.out.println("MENU");
         System.out.println("1 Mostrar Formaciones");
@@ -36,7 +37,7 @@ public class Menu {
         }
     }
 
-    private void ejecutarAccion(int opcion) throws ParserConfigurationException, SAXException {
+    private void ejecutarAccion(int opcion) throws ParserConfigurationException, SAXException, TransformerException {
         switch(opcion) {
             case 1:
                 this.mostrarFormaciones();
@@ -51,7 +52,7 @@ public class Menu {
                 mostrarMenu();
                 break;
             case 4:
-                System.out.println("exportarXML");
+                this.exportarXML();
                 mostrarMenu();
                 break;
             case 5:
@@ -76,5 +77,9 @@ public class Menu {
     private void mostrarResultado()
     {
         service.mostrarResultado();
+    }
+
+    private void exportarXML() throws TransformerException, ParserConfigurationException {
+        service.exportarXML();
     }
 }

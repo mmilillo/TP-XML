@@ -2,6 +2,7 @@ import org.xml.sax.SAXException;
 import xml.ValidadorXSD;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -37,7 +38,7 @@ public class Main {
          return scanner.nextLine();
      }
 
-     public static void mostrarMenu(String pathXml) throws ParserConfigurationException, SAXException, IOException {
+     public static void mostrarMenu(String pathXml) throws ParserConfigurationException, SAXException, IOException, TransformerException {
          System.out.println("archivo correcto");
          Menu menu = new Menu(pathXml);
          menu.mostrarMenu();
