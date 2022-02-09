@@ -40,7 +40,7 @@ public class ExploradorXML {
         // Creamos el parser y parseamos el input stream
         this.builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         this.doc = builder.parse(new InputSource(inputStream));
-        this.root = doc.getDocumentElement();
+        this.root = doc.getDocumentElement(); //este es el parser con el documento que quiero usar, me da los metodos para recorrerlo
     }
 
     public Document getDocumentNode(){

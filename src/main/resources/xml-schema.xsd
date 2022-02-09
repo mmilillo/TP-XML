@@ -26,7 +26,7 @@
 
 
     <xs:complexType name="formacion" >
-        <xs:sequence maxOccurs="11">
+        <xs:sequence maxOccurs="11" minOccurs="11">
             <xs:element name="jugador" type="fcion:jugador" />
         </xs:sequence>
     </xs:complexType>
