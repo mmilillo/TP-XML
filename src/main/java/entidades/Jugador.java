@@ -1,4 +1,4 @@
-package Entidades;
+package entidades;
 
 public class Jugador {
     private String nombre;

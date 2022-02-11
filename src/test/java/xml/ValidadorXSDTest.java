@@ -15,14 +15,14 @@ public class ValidadorXSDTest extends TestCase {
     @Test
     public void testArchivoValido() throws IOException, ParserConfigurationException {
         ValidadorXSD validador = new ValidadorXSD(pathXMLValido,pathXSD);
-        boolean resultado = validador.Validar();
+        boolean resultado = validador.validar();
         assertEquals(true, resultado);
     }
 
     @Test
     public void testArchivoInvalido() throws IOException, ParserConfigurationException {
         ValidadorXSD validador = new ValidadorXSD(pathXMLInvalido,pathXSD);
-        boolean resultado = validador.Validar();
+        boolean resultado = validador.validar();
         assertEquals(false, resultado);
     }
 

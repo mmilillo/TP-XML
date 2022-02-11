@@ -1,9 +1,9 @@
-package Servicios;
+package servicios;
 
-import Entidades.Formacion;
-import Entidades.Gol;
-import Entidades.Jugador;
-import Entidades.Marcador;
+import entidades.Formacion;
+import entidades.Gol;
+import entidades.Jugador;
+import entidades.Marcador;
 import org.xml.sax.SAXException;
 import xml.ControladorSAX;
 import xml.ExploradorXML;
@@ -15,11 +15,9 @@ import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class FormacionService {
 
-    private String path;
     private ExploradorXML exploradorXML;
     private ControladorSAX sh;
     private SAXParser saxParser;
@@ -32,11 +30,11 @@ public class FormacionService {
         //para recorrer sin el dom
         sh = new ControladorSAX();
 
-        SAXParserFactory factory = SAXParserFactory.newInstance();  //Creem una instancia d'una factoria de parser SAX
+        SAXParserFactory factory = SAXParserFactory.newInstance();  //Creem una instancia de una factoria de parser SAX
         saxParser = factory.newSAXParser();
 
         ClassLoader classLoader = FormacionService.class.getClassLoader();
-        inputStream = classLoader.getResourceAsStream("procesar.xml");//aca iria el path posta
+        inputStream = classLoader.getResourceAsStream("procesar.xml");
 
     }
 
@@ -60,12 +58,10 @@ public class FormacionService {
 
         System.out.println(" -- Formacion visitante -- ");
         formacionVisitante.imprimir();
-
     }
 
     private void formatearFormacion(Formacion formacion, List<Gol> goles, String capitan){
         List<Jugador> jugadores = formacion.getFormacion();
-
         //agrega marca capitan
         for(Jugador jugador : jugadores){
             if(jugador.getNombre().equals(capitan)){
@@ -73,20 +69,19 @@ public class FormacionService {
             }
         }
 
-
         //agrega marca de goles al jugador
         for(Gol gol : goles){
             Jugador jugador = jugadores.stream().filter(j -> j.getNombre().contains(gol.getAutor())).findFirst().get();
             jugador.setNombre(jugador.getNombre() + " *");
         }
-
     }
+
 
     /***
      * Muestra las figuras del partido
      * No recorre el dom del XML
      */
-    public void mostrarFiguraPartido() throws ParserConfigurationException, SAXException {
+    public void mostrarFiguraPartido() throws SAXException {
         try{
             saxParser.parse(inputStream,sh);
         } catch (IOException e) {

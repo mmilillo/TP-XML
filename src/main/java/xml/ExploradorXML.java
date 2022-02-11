@@ -1,9 +1,9 @@
 package xml;
 
-import Entidades.Formacion;
-import Entidades.Gol;
-import Entidades.Jugador;
-import Entidades.Marcador;
+import entidades.Formacion;
+import entidades.Gol;
+import entidades.Jugador;
+import entidades.Marcador;
 import org.w3c.dom.*;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -25,7 +25,6 @@ import java.util.stream.Stream;
 
 public class ExploradorXML {
 
-    private String pathXml;
     private ClassLoader classLoader;
     private InputStream inputStream;
     private DocumentBuilder builder;
@@ -40,11 +39,7 @@ public class ExploradorXML {
         // Creamos el parser y parseamos el input stream
         this.builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         this.doc = builder.parse(new InputSource(inputStream));
-        this.root = doc.getDocumentElement(); //este es el parser con el documento que quiero usar, me da los metodos para recorrerlo
-    }
-
-    public Document getDocumentNode(){
-        return this.doc;
+        this.root = doc.getDocumentElement();
     }
 
     public Formacion getFormacion(String localidad){
@@ -52,7 +47,7 @@ public class ExploradorXML {
 
         //recupero formacion
         Node unEquipo =  doc.getElementsByTagName(localidad).item(0); //devuelve una NodeList de 1
-        Node formacionNode = getFormacion(unEquipo);//getUniqueNodeByName(nodosHijosEquipo,"formacion");
+        Node formacionNode = getFormacion(unEquipo);
         Collection<Node> jugadores = getNodesByName(formacionNode.getChildNodes(), "jugador");
 
         for(Node jugador : jugadores){
@@ -71,14 +66,14 @@ public class ExploradorXML {
     public Marcador getMarcador(){
 
         //recupero eqipos
-        Node equipoLocal =  doc.getElementsByTagName("local").item(0); //devuelve una NodeList de 1
-        Node equipoVisitante =  doc.getElementsByTagName("visitante").item(0); //devuelve una NodeList de 1
+        Node equipoLocal =  doc.getElementsByTagName("local").item(0);
+        Node equipoVisitante =  doc.getElementsByTagName("visitante").item(0);
 
         String nombreLocal = equipoLocal.getAttributes().item(0).getNodeValue();
         String nombreVisitante = equipoVisitante.getAttributes().item(0).getNodeValue();
 
         //recupero goles
-        Node goles = doc.getElementsByTagName("goles").item(0); //devuelve una NodeList de 1
+        Node goles = doc.getElementsByTagName("goles").item(0);
 
         Node golesLocalNode = getGolesPorLocalidad(goles,"local");
         Node golesVisitanteNode = getGolesPorLocalidad(goles,"visitante");
@@ -119,21 +114,16 @@ public class ExploradorXML {
 
     public String getCapitanByLocalidad(String localidad){
         //recupero capitan
-        Node unEquipo =  doc.getElementsByTagName(localidad).item(0); //devuelve una NodeList de 1
-        Node capitanNode = getCapitan(unEquipo); //getUniqueNodeByName(nodosHijosEquipo, "capitan");
+        Node unEquipo =  doc.getElementsByTagName(localidad).item(0);
+        Node capitanNode = getCapitan(unEquipo);
         String nombreCapitan = capitanNode.getFirstChild().getNodeValue();
 
         return nombreCapitan;
     }
 
-    public void exportarXML(String comentarios) throws TransformerException, ParserConfigurationException {
+    public void exportarXML(String comentarios) throws TransformerException {
         Node partido =  doc.getDocumentElement();
         String nombreArchivo = "outPutXML";
-
-        //nuevo elemeto
-        //Element notas = doc.createElement("notas");
-        //notas.setNodeValue(comentarios);
-        //partido.appendChild(notas);
 
         Element notas = doc.createElement("notas");
         Text notasTexto = doc.createTextNode(comentarios);
@@ -143,7 +133,7 @@ public class ExploradorXML {
         //Generate XML
         Source source = new DOMSource(doc);
         //Indicamos donde lo queremos almacenar
-        Result result = new StreamResult(new java.io.File(nombreArchivo+".xml")); //nombre del archivo
+        Result result = new StreamResult(new java.io.File(nombreArchivo+".xml"));
         Transformer transformer = TransformerFactory.newInstance().newTransformer();
         transformer.transform(source, result);
 

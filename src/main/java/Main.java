@@ -17,10 +17,12 @@ public class Main {
 
         ValidadorXSD validador = new ValidadorXSD(pathXml,pathXsd);
 
-        if(validador.Validar())
+        if(validador.validar()){
             mostrarMenu(pathXml);
-        else
+        }
+        else{
             mostrarError();
+        }
 
     }
 

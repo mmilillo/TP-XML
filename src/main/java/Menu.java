@@ -1,4 +1,4 @@
-import Servicios.FormacionService;
+import servicios.FormacionService;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;

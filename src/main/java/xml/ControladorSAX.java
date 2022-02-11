@@ -10,10 +10,7 @@ public class ControladorSAX extends DefaultHandler
     int figuraNumero = 0;
     boolean isFugira = false;
 
-    public ControladorSAX ()
-    {
-
-    }
+    public ControladorSAX () {}
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {

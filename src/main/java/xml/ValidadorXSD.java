@@ -10,8 +10,6 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.SchemaFactory;
 import java.io.IOException;
 
-// SAX
-//SAX and external XSD
 
 public class ValidadorXSD {
 
@@ -26,9 +24,8 @@ public class ValidadorXSD {
     }
 
     // validate SAX and external XSD 
-    public boolean Validar() throws ParserConfigurationException, IOException
+    public boolean validar() throws IOException
     {
-        String resulado = "";
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             factory.setValidating(false);
@@ -48,8 +45,8 @@ public class ValidadorXSD {
             XMLReader reader = parser.getXMLReader();
             reader.setErrorHandler(
                     new ErrorHandler() {
-                        public void warning(SAXParseException e) throws SAXException {
-                            System.out.println("WARNING: " + e.getMessage()); // do nothing
+                        public void warning(SAXParseException e) {
+                            System.out.println("WARNING: " + e.getMessage());
                         }
 
                         public void error(SAXParseException e) throws SAXException {
@@ -67,7 +64,6 @@ public class ValidadorXSD {
             return true;
         }
         catch (ParserConfigurationException pce) {
-            //throw pce;
             return false;
         }
         catch (IOException io) {

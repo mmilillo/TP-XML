@@ -1,7 +1,7 @@
 package xml;
 
-import Entidades.Formacion;
-import Entidades.Marcador;
+import entidades.Formacion;
+import entidades.Marcador;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.Test;
 import org.xml.sax.SAXException;
