@@ -14,18 +14,20 @@ import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.*;
 
 public class FormacionService {
 
-    private ExploradorXML exploradorXML;
-    private ControladorSAX sh;
-    private SAXParser saxParser;
-    private InputStream inputStream;
+    private final ExploradorXML exploradorXML;
+    private final ControladorSAX sh;
+    private final SAXParser saxParser;
+    private final InputStream inputStream;
 
 
     public FormacionService(String path) throws IOException, SAXException, ParserConfigurationException {
-        exploradorXML = new ExploradorXML("procesar.xml"); //aca iria el path posta
+        exploradorXML = new ExploradorXML(path);
 
         //para recorrer sin el dom
         sh = new ControladorSAX();
@@ -34,7 +36,7 @@ public class FormacionService {
         saxParser = factory.newSAXParser();
 
         ClassLoader classLoader = FormacionService.class.getClassLoader();
-        inputStream = classLoader.getResourceAsStream("procesar.xml");
+        inputStream = classLoader.getResourceAsStream(path);
 
     }
 
@@ -133,10 +135,10 @@ public class FormacionService {
     }
 
     /**
-     * Exporta el xml del partido agregando una seccion notas como hija de <partido>
+     * Exporta el xml del partido agregando una seccion notas como hija de <partido> el cual puede encontrarse en la raiz del proyecto.
      */
-    public void exportarXML(String notas) throws TransformerException, ParserConfigurationException {
+    public void exportarXML(String notas) throws TransformerException {
         System.out.println(notas);
-        exploradorXML.exportarXML(notas);
+        exploradorXML.exportarXML(notas, "outPut_" + LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
     };
 }

@@ -8,6 +8,7 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
+import java.io.File;
 import java.io.IOException;
 
 public class ExploradorXMLTest extends TestCase {
@@ -19,7 +20,6 @@ public class ExploradorXMLTest extends TestCase {
     public ExploradorXMLTest() throws IOException, SAXException, ParserConfigurationException {
         exploradorXML = new ExploradorXML(pathXMLValido);
     }
-
 
 
     @Test
@@ -60,8 +60,12 @@ public class ExploradorXMLTest extends TestCase {
 
 
     @Test
-    public void testExportarXML() throws IOException, SAXException, ParserConfigurationException, TransformerException {
-        exploradorXML.exportarXML("prueba");
+    public void testExportarXML() throws TransformerException {
+        String nombreArchivoOutPut = "uotPutTest";
+        exploradorXML.exportarXML("prueba", nombreArchivoOutPut);
+        String pathArchivoGenerado = System.getProperty("user.dir") + "\\" +nombreArchivoOutPut + ".xml";
+        File archivoGenerado = new File(pathArchivoGenerado);
+        assertTrue(archivoGenerado.exists());
     }
 
 

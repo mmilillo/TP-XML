@@ -70,7 +70,7 @@ public class Menu {
         service.mostrarFormaciones();
     }
 
-    private void mostrarFiguraPartido() throws ParserConfigurationException, SAXException {
+    private void mostrarFiguraPartido() throws SAXException {
         service.mostrarFiguraPartido();
     }
 

@@ -46,7 +46,7 @@ public class ExploradorXML {
         Formacion formacion = new Formacion();
 
         //recupero formacion
-        Node unEquipo =  doc.getElementsByTagName(localidad).item(0); //devuelve una NodeList de 1
+        Node unEquipo =  doc.getElementsByTagName(localidad).item(0);
         Node formacionNode = getFormacion(unEquipo);
         Collection<Node> jugadores = getNodesByName(formacionNode.getChildNodes(), "jugador");
 
@@ -113,7 +113,6 @@ public class ExploradorXML {
     }
 
     public String getCapitanByLocalidad(String localidad){
-        //recupero capitan
         Node unEquipo =  doc.getElementsByTagName(localidad).item(0);
         Node capitanNode = getCapitan(unEquipo);
         String nombreCapitan = capitanNode.getFirstChild().getNodeValue();
@@ -121,10 +120,14 @@ public class ExploradorXML {
         return nombreCapitan;
     }
 
-    public void exportarXML(String comentarios) throws TransformerException {
+    /**
+     * Exporta archivo XML procesado junto con una nota agregada.
+     * @param comentarios, comentarios a agregar bajo el tag <notas>comentarios<notas/>
+     * @param nombreOutPut, nombre del archivo a exportar, al cual se agregará la extension  .xml
+     * @throws TransformerException
+     */
+    public void exportarXML(String comentarios, String nombreOutPut) throws TransformerException {
         Node partido =  doc.getDocumentElement();
-        String nombreArchivo = "outPutXML";
-
         Element notas = doc.createElement("notas");
         Text notasTexto = doc.createTextNode(comentarios);
         notas.appendChild(notasTexto);
@@ -133,7 +136,7 @@ public class ExploradorXML {
         //Generate XML
         Source source = new DOMSource(doc);
         //Indicamos donde lo queremos almacenar
-        Result result = new StreamResult(new java.io.File(nombreArchivo+".xml"));
+        Result result = new StreamResult(new java.io.File(nombreOutPut + ".xml"));
         Transformer transformer = TransformerFactory.newInstance().newTransformer();
         transformer.transform(source, result);
 

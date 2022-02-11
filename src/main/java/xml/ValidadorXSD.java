@@ -11,6 +11,7 @@ import javax.xml.validation.SchemaFactory;
 import java.io.IOException;
 
 
+
 public class ValidadorXSD {
 
     private String PATH_XML = "";
@@ -19,11 +20,10 @@ public class ValidadorXSD {
     private ValidadorXSD(){};
 
     public ValidadorXSD(String xml, String xsd) {
-        PATH_XML = xml;
-        PATH_XSD = xsd;
+        PATH_XML = Thread.currentThread().getContextClassLoader().getResource(xml).getPath();
+        PATH_XSD = Thread.currentThread().getContextClassLoader().getResource(xsd).getPath();
     }
 
-    // validate SAX and external XSD 
     public boolean validar() throws IOException
     {
         try {

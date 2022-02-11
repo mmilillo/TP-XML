@@ -12,8 +12,8 @@ public class Main {
     public static void main (String args[]) throws Exception{
         System.out.println ("Validando XML con XSD");
 
-        pathXml = "src/main/resources/procesar.xml";
-        pathXsd = "src/main/resources/xml-schema.xsd";
+        pathXml = "procesar.xml";
+        pathXsd = "xml-schema.xsd";
 
         ValidadorXSD validador = new ValidadorXSD(pathXml,pathXsd);
 
