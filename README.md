@@ -31,3 +31,7 @@ Ingrese una opcion:
 
 ``` 
 Al seleccionar la opción ``4 Exportar XML`` se solicitara que ingrese una nota y el archivo generado podrá encontrarse en la raíz del proyecto.
+
+## Consigna 
+
+Esta aplicación surge de un trabajo práctico de la materia Programación Distribuida 2 de la UNDAV, dictada por el docente  Juan Lagostena, cuya consigna puede encontrarse en este [link](https://docs.google.com/document/d/1jOSzAYlrHEf3Y6eUqshWvW5Plm5pal92bfR612CyHp0).
