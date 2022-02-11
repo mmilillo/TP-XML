@@ -43,12 +43,28 @@
     <goles>
         <visitante>
             <gol>
+                <minuto>90</minuto>
+                <autor>Miguel Caneo</autor>
+            </gol>
+            <gol>
                 <minuto>18</minuto>
                 <autor>Martín Cauteruccio</autor>
             </gol>
             <gol>
                 <minuto>23</minuto>
                 <autor>Martín Cauteruccio</autor>
+            </gol>
+            <gol>
+                <minuto>24</minuto>
+                <autor>Miguel Caneo</autor>
+            </gol>
+            <gol>
+                <minuto>24</minuto>
+                <autor>Jacobo Mansilla</autor>
+            </gol>
+            <gol>
+                <minuto>5</minuto>
+                <autor>Emanuel Tripodi</autor>
             </gol>
         </visitante>
     </goles>

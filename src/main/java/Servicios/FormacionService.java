@@ -14,9 +14,8 @@ import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class FormacionService {
 
@@ -66,7 +65,6 @@ public class FormacionService {
 
     private void formatearFormacion(Formacion formacion, List<Gol> goles, String capitan){
         List<Jugador> jugadores = formacion.getFormacion();
-        Map<String, String> autorGoles = new HashMap<String, String>();
 
         //agrega marca capitan
         for(Jugador jugador : jugadores){
@@ -75,25 +73,13 @@ public class FormacionService {
             }
         }
 
-        //completa diccionario con autor - goles
-        for(Gol gol : goles){
-            String autor = gol.getAutor();
-            if(!autorGoles.containsKey(autor)){
-                autorGoles.put(gol.getAutor(), "*");
-            }
-            else{
-                autorGoles.replace(autor,autorGoles.get(autor) + "*");
-            }
-        }
 
         //agrega marca de goles al jugador
         for(Gol gol : goles){
-            for(Jugador jugador : jugadores){
-                if(jugador.getNombre().equals(gol.getAutor())){
-                    jugador.setNombre(jugador.getNombre() + " " + autorGoles.get(gol.getAutor()));
-                }
-            }
+            Jugador jugador = jugadores.stream().filter(j -> j.getNombre().contains(gol.getAutor())).findFirst().get();
+            jugador.setNombre(jugador.getNombre() + " *");
         }
+
     }
 
     /***
@@ -120,12 +106,12 @@ public class FormacionService {
         List<Gol> golesLocales = marcador.getGolesLocales();
         List<Gol> golesVisitantes = marcador.getGolesVisitantes();
 
-        Map<String,String> autorGolesLocales = new HashMap<String, String>();
-        Map<String,String> autorGolesVisitantes = new HashMap<String, String>();
+        LinkedHashMap<String,String> autorGolesLocales = new  LinkedHashMap<String, String>();
+        LinkedHashMap<String,String> autorGolesVisitantes = new  LinkedHashMap<String, String>();
 
         for(Gol gol : golesLocales){
             if(!autorGolesLocales.containsKey(gol.getAutor())){
-                autorGolesLocales.put(gol.getAutor(),gol.getMinuto());
+                autorGolesLocales.put(gol.getAutor(),gol.getAutor() + " " + gol.getMinuto());
             }
             else{
                 String autor = gol.getAutor();
@@ -135,7 +121,7 @@ public class FormacionService {
 
         for(Gol gol : golesVisitantes){
             if(!autorGolesVisitantes.containsKey(gol.getAutor())){
-                autorGolesVisitantes.put(gol.getAutor(),gol.getMinuto());
+                autorGolesVisitantes.put(gol.getAutor(),gol.getAutor() + " " + gol.getMinuto());
             }
             else{
                 String autor = gol.getAutor();
@@ -145,10 +131,10 @@ public class FormacionService {
 
 
         System.out.println(marcador.getEquipoLocal() + " " + marcador.getGolesLocales().size());
-        autorGolesLocales.forEach((k,v) -> System.out.println(k + " " + v));
+        autorGolesLocales.forEach((k,v) -> System.out.println(v));
         System.out.println(" ");
         System.out.println(marcador.getEquipoVisitante() + " " + marcador.getGolesVisitantes().size());
-        autorGolesVisitantes.forEach((k,v) -> System.out.println(k + " " + v));
+        autorGolesVisitantes.forEach((k,v) -> System.out.println(v));
     }
 
     /**
