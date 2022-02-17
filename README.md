@@ -1,3 +1,5 @@
+![Coverage](.github/badges/jacoco.svg) 
+
 # TP-XML
 
 Este repositorio consta de una aplicación java, la cual utiliza Maven,  capaz de validar archivos XML a partir del correspondiente XSD.
