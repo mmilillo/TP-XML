@@ -63,7 +63,7 @@ public class ExploradorXMLTest extends TestCase {
     public void testExportarXML() throws TransformerException {
         String nombreArchivoOutPut = "uotPutTest";
         exploradorXML.exportarXML("prueba", nombreArchivoOutPut);
-        String pathArchivoGenerado = System.getProperty("user.dir") + "\\" +nombreArchivoOutPut + ".xml";
+        String pathArchivoGenerado = System.getProperty("user.dir") + "/" +nombreArchivoOutPut + ".xml";
         File archivoGenerado = new File(pathArchivoGenerado);
         assertTrue(archivoGenerado.exists());
     }
